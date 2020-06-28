@@ -1,5 +1,7 @@
 package com.cabraworks.cabrafood.domain.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,14 @@ public class CadastroUsuarioService {
 	
 	@Transactional
 	public Usuario salvar(Usuario user) {
+		
+		repository.detach(user);
+		
+		Optional<Usuario> usuario = repository.findByEmail(user.getEmail());
+		
+		if(usuario.isPresent() && !usuario.get().equals(user)) {
+			throw new NegocioException(String.format("O email %s já está cadastrado em outro usuário. Insira outro.", user.getEmail()));
+		}
 		
 		return repository.save(user);
 	}
