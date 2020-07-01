@@ -3,7 +3,9 @@ package com.cabraworks.cabrafood.domain.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -76,7 +78,7 @@ public class Restaurante {
 	@JoinTable(name = "restaurante_forma_pagamento",        //config do nome da tabela
 			joinColumns = @JoinColumn(name = "restaurante_id"),                //config nome das colunas
 			inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))  
-	private List<FormaPagamento> formasDePagamento= new ArrayList<>();
+	private Set<FormaPagamento> formasDePagamento= new HashSet<>();
 	
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
@@ -87,5 +89,15 @@ public class Restaurante {
 
 	public void inativar() {
 		setAtivo(false);
+	}
+	
+	public boolean adicionarFormaPagamento(FormaPagamento formaPagamento) {
+		
+		return getFormasDePagamento().add(formaPagamento);
+	}
+	
+	public boolean removerFormaPagamento(FormaPagamento formaPagamento) {
+		
+		return getFormasDePagamento().remove(formaPagamento);
 	}
 }

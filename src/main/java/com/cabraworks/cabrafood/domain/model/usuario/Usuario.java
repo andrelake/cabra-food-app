@@ -27,33 +27,31 @@ public class Usuario {
 	@EqualsAndHashCode.Include
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@Column(nullable = false)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private String senha;
-	
+
 	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime dataCadastro;
-	
+
 	@ManyToMany
-	@JoinTable(name = "usuario_grupos",
-			joinColumns = @JoinColumn(name = "usuario_id"),
-			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+	@JoinTable(name = "usuario_grupos", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private List<Grupo> grupos = new ArrayList<>();
-	
+
 	public boolean senhaChecked(String senha) {
-		
+
 		return getSenha().equals(senha);
 	}
-	
-public boolean senhaUnchecked(String senha) {
-		
+
+	public boolean senhaUnchecked(String senha) {
+
 		return !senhaChecked(senha);
 	}
 }

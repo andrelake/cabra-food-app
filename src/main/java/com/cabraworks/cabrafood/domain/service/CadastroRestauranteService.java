@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cabraworks.cabrafood.domain.exception.RestauranteNaoEncontradoException;
 import com.cabraworks.cabrafood.domain.model.Cozinha;
 import com.cabraworks.cabrafood.domain.model.Restaurante;
+import com.cabraworks.cabrafood.domain.model.pedido.FormaPagamento;
 import com.cabraworks.cabrafood.domain.model.restaurante.Cidade;
 import com.cabraworks.cabrafood.domain.repository.RestauranteRepository;
 
@@ -21,6 +22,9 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private CadastroCidadeService cidadeService;
+	
+	@Autowired
+	private CadastroFormaDePagamentoService formaService;
 	
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
@@ -51,6 +55,24 @@ public class CadastroRestauranteService {
 		restauranteAtual.inativar();
 	}
 
+	@Transactional
+	public void associarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+		
+		Restaurante restaurante = buscarOuFalhar(restauranteId);
+		FormaPagamento formaPagamento = formaService.buscarOuFalhar(formaPagamentoId);
+		
+		restaurante.adicionarFormaPagamento(formaPagamento);
+	}
+	
+	@Transactional
+	public void desassociarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+		
+		Restaurante restaurante = buscarOuFalhar(restauranteId);
+		FormaPagamento formaPagamento = formaService.buscarOuFalhar(formaPagamentoId);
+		
+		restaurante.removerFormaPagamento(formaPagamento);
+	}
+	
 	public Restaurante buscarOuFalhar(Long id) {
 		
 		return restauranteRepository.findById(id)

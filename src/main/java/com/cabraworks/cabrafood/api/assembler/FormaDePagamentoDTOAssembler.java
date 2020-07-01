@@ -1,5 +1,6 @@
 package com.cabraworks.cabrafood.api.assembler;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class FormaDePagamentoDTOAssembler {
 		return modelMapper.map(formapagamento, FormaDePagamentoDTO.class);
 	}
 	
-	public List<FormaDePagamentoDTO> toCollectionModel(List<FormaPagamento> formas) {
+	public List<FormaDePagamentoDTO> toCollectionModel(Collection<FormaPagamento> formas) {
 		
 		return formas.stream()
 				.map(forma -> toModel(forma))
