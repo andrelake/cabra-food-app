@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cabraworks.cabrafood.api.model.UsuarioDTO;
-import com.cabraworks.cabrafood.domain.model.usuario.Usuario;
+import com.cabraworks.cabrafood.domain.model.usuario.Produto;
 
 @Component
 public class UsuarioDTOAssembler {
@@ -16,12 +16,12 @@ public class UsuarioDTOAssembler {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	public UsuarioDTO toModel(Usuario user) {
+	public UsuarioDTO toModel(Produto user) {
 		
 		return modelMapper.map(user, UsuarioDTO.class);
 	}
 	
-	public List<UsuarioDTO> toCollectionModel(List<Usuario> users) {
+	public List<UsuarioDTO> toCollectionModel(List<Produto> users) {
 		
 		return users.stream()
 				.map(user -> toModel(user))

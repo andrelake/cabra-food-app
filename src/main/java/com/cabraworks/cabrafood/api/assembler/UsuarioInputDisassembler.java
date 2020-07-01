@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.cabraworks.cabrafood.api.model.input.UsuarioInput;
 import com.cabraworks.cabrafood.api.model.input.UsuarioSemSenhaInput;
-import com.cabraworks.cabrafood.domain.model.usuario.Usuario;
+import com.cabraworks.cabrafood.domain.model.usuario.Produto;
 
 @Component
 public class UsuarioInputDisassembler {
@@ -14,17 +14,17 @@ public class UsuarioInputDisassembler {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	public Usuario toDomainObject(UsuarioInput userInput) {
+	public Produto toDomainObject(UsuarioInput userInput) {
 
-		return modelMapper.map(userInput, Usuario.class);
+		return modelMapper.map(userInput, Produto.class);
 	}
 
-	public void copyToDomainObject(UsuarioInput userInput, Usuario user) {
+	public void copyToDomainObject(UsuarioInput userInput, Produto user) {
 
 		modelMapper.map(userInput, user);
 	}
 
-	public void copyToDomainObject(UsuarioSemSenhaInput userSemSenhaInput, Usuario user) {
+	public void copyToDomainObject(UsuarioSemSenhaInput userSemSenhaInput, Produto user) {
 
 		modelMapper.map(userSemSenhaInput, user);
 	}

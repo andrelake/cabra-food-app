@@ -25,16 +25,16 @@ public class Produto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "produto_nome", nullable = false)
+	@Column(name = "nome", nullable = false)
 	private String nome;
 	
-	@Column(name = "produto_descricao", nullable = false)
+	@Column(name = "descricao", nullable = false)
 	private String descricao;
 	
-	@Column(name = "produto_preco", nullable = false)
+	@Column(name = "preco", nullable = false)
 	private BigDecimal preco;
 	
-	@Column(name = "produto_ativo", nullable = false)
+	@Column(name = "ativo", nullable = false)
 	private Boolean ativo;
 	
 	@ManyToOne

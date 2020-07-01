@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cabraworks.cabrafood.domain.exception.EntidadeEmUsoException;
 import com.cabraworks.cabrafood.domain.exception.NegocioException;
 import com.cabraworks.cabrafood.domain.exception.UsuarioNaoEncontradoException;
-import com.cabraworks.cabrafood.domain.model.usuario.Usuario;
+import com.cabraworks.cabrafood.domain.model.usuario.Produto;
 import com.cabraworks.cabrafood.domain.repository.UsuarioRepository;
 
 @Service
@@ -20,11 +20,11 @@ public class CadastroUsuarioService {
 	private UsuarioRepository repository;
 	
 	@Transactional
-	public Usuario salvar(Usuario user) {
+	public Produto salvar(Produto user) {
 		
 		repository.detach(user);
 		
-		Optional<Usuario> usuario = repository.findByEmail(user.getEmail());
+		Optional<Produto> usuario = repository.findByEmail(user.getEmail());
 		
 		if(usuario.isPresent() && !usuario.get().equals(user)) {
 			throw new NegocioException(String.format("O email %s já está cadastrado em outro usuário. Insira outro.", user.getEmail()));
@@ -49,7 +49,7 @@ public class CadastroUsuarioService {
 	@Transactional
 	public void alterarSenha(Long id, String senhaAtual, String novaSenha) {
 		
-		Usuario user = buscarOuFalhar(id);
+		Produto user = buscarOuFalhar(id);
 		
 		if(user.senhaUnchecked(senhaAtual)) {
 			throw new NegocioException("Erro ao validar a senha");
@@ -58,7 +58,7 @@ public class CadastroUsuarioService {
 		user.setSenha(novaSenha);
 	}
 	
-	public Usuario buscarOuFalhar(Long id) {
+	public Produto buscarOuFalhar(Long id) {
 		
 		return repository.findById(id)
 				.orElseThrow(() -> new UsuarioNaoEncontradoException(id));
