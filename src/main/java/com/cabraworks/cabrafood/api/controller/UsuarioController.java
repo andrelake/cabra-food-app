@@ -21,7 +21,7 @@ import com.cabraworks.cabrafood.api.model.UsuarioDTO;
 import com.cabraworks.cabrafood.api.model.input.UsuarioInput;
 import com.cabraworks.cabrafood.api.model.input.UsuarioSemSenhaInput;
 import com.cabraworks.cabrafood.api.model.input.UsuarioSenhaInput;
-import com.cabraworks.cabrafood.domain.model.usuario.Produto;
+import com.cabraworks.cabrafood.domain.model.usuario.Usuario;
 import com.cabraworks.cabrafood.domain.repository.UsuarioRepository;
 import com.cabraworks.cabrafood.domain.service.CadastroUsuarioService;
 
@@ -57,7 +57,7 @@ public class UsuarioController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public UsuarioDTO insert(@RequestBody @Valid UsuarioInput userInput) {
 		
-		Produto user = disassembler.toDomainObject(userInput);
+		Usuario user = disassembler.toDomainObject(userInput);
 		
 		return assembler.toModel(service.salvar(user));
 	}
@@ -65,7 +65,7 @@ public class UsuarioController {
 	@PutMapping("/{id}")
 	public UsuarioDTO atualizar(@PathVariable Long id, @RequestBody @Valid UsuarioSemSenhaInput userSemSenhaInput) {
 		
-		Produto user = service.buscarOuFalhar(id);
+		Usuario user = service.buscarOuFalhar(id);
 		
 		disassembler.copyToDomainObject(userSemSenhaInput, user);
 		

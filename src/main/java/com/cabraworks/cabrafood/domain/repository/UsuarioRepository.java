@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.cabraworks.cabrafood.domain.model.usuario.Produto;
+import com.cabraworks.cabrafood.domain.model.usuario.Usuario;
 
 @Repository
-public interface UsuarioRepository extends CustomJpaRepository<Produto, Long>{
+public interface UsuarioRepository extends CustomJpaRepository<Usuario, Long>{
 
-	Optional<Produto> findByEmail(String email);
+	Optional<Usuario> findByEmail(String email);
 }

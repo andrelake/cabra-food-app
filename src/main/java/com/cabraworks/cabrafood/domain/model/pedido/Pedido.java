@@ -19,7 +19,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.cabraworks.cabrafood.domain.model.Restaurante;
 import com.cabraworks.cabrafood.domain.model.restaurante.Endereco;
-import com.cabraworks.cabrafood.domain.model.usuario.Produto;
+import com.cabraworks.cabrafood.domain.model.usuario.Usuario;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -59,7 +59,7 @@ public class Pedido {
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_cliente_id", nullable = false)
-	private Produto cliente;
+	private Usuario cliente;
 	
 	@Embedded
 	private Endereco enderecoEntrega;

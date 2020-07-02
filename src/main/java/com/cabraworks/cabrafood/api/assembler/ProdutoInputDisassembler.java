@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.cabraworks.cabrafood.api.model.input.ProdutoInput;
-import com.cabraworks.cabrafood.domain.model.usuario.Produto;
+import com.cabraworks.cabrafood.domain.model.produto.Produto;
 
 @Component
 public class ProdutoInputDisassembler {
