@@ -32,6 +32,7 @@ import com.cabraworks.cabrafood.core.validation.Groups;
 import com.cabraworks.cabrafood.domain.model.pedido.FormaPagamento;
 import com.cabraworks.cabrafood.domain.model.produto.Produto;
 import com.cabraworks.cabrafood.domain.model.restaurante.Endereco;
+import com.cabraworks.cabrafood.domain.model.usuario.Usuario;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -84,6 +85,12 @@ public class Restaurante {
 	
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
+	
+	@ManyToMany
+	@JoinTable(name = "restaurante_usuario_responsavel",        
+			joinColumns = @JoinColumn(name = "restaurante_id"),                //config nome das colunas
+			inverseJoinColumns = @JoinColumn(name = "usuario_id"))  
+	private Set<Usuario> resposanveis= new HashSet<>();
 	
 	public void ativar() {
 		setAtivo(true);
