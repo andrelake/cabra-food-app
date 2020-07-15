@@ -9,6 +9,7 @@ import com.cabraworks.cabrafood.domain.model.Cozinha;
 import com.cabraworks.cabrafood.domain.model.Restaurante;
 import com.cabraworks.cabrafood.domain.model.pedido.FormaPagamento;
 import com.cabraworks.cabrafood.domain.model.restaurante.Cidade;
+import com.cabraworks.cabrafood.domain.model.usuario.Usuario;
 import com.cabraworks.cabrafood.domain.repository.RestauranteRepository;
 
 @Service
@@ -25,6 +26,9 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private CadastroFormaDePagamentoService formaService;
+	
+	@Autowired
+	private CadastroUsuarioService usuarioService;
 	
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
@@ -87,6 +91,24 @@ public class CadastroRestauranteService {
 		FormaPagamento formaPagamento = formaService.buscarOuFalhar(formaPagamentoId);
 		
 		restaurante.removerFormaPagamento(formaPagamento);
+	}
+	
+	@Transactional
+	public void associarResponsavel(Long restauranteId, Long usuarioId) {
+		
+		Restaurante restaurante = buscarOuFalhar(restauranteId);
+		Usuario usuario = usuarioService.buscarOuFalhar(usuarioId);
+		
+		restaurante.adicionarResponsavel(usuario);
+	}
+	
+	@Transactional
+	public void desassociarResponsavel(Long restauranteId, Long usuarioId) {
+		
+		Restaurante restaurante = buscarOuFalhar(restauranteId);
+		Usuario usuario = usuarioService.buscarOuFalhar(usuarioId);
+		
+		restaurante.removerResponsavel(usuario);
 	}
 	
 	public Restaurante buscarOuFalhar(Long id) {

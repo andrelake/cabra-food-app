@@ -46,52 +46,50 @@ public class Restaurante {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@PositiveOrZero
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
-	
+
 	@Valid
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@NotNull
-	@ManyToOne //(fetch = FetchType.LAZY)     // ToOne é, por default, eager
+	@ManyToOne // (fetch = FetchType.LAZY) // ToOne é, por default, eager
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
-	
+
 	@Embedded
 	private Endereco endereco;
-	
+
 	private Boolean ativo = Boolean.TRUE;
-	
+
 	private Boolean aberto = Boolean.TRUE;
-	
+
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime dataCadastro;
-	
+
 	@UpdateTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private LocalDateTime dataAtualizacao;
-	
+
 	@ManyToMany
-	@JoinTable(name = "restaurante_forma_pagamento",        //config do nome da tabela
-			joinColumns = @JoinColumn(name = "restaurante_id"),                //config nome das colunas
-			inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))  
-	private Set<FormaPagamento> formasDePagamento= new HashSet<>();
-	
+	@JoinTable(name = "restaurante_forma_pagamento", // config do nome da tabela
+			joinColumns = @JoinColumn(name = "restaurante_id"), // config nome das colunas
+			inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
+	private Set<FormaPagamento> formasDePagamento = new HashSet<>();
+
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
-	
+
 	@ManyToMany
-	@JoinTable(name = "restaurante_usuario_responsavel",        
-			joinColumns = @JoinColumn(name = "restaurante_id"),                //config nome das colunas
-			inverseJoinColumns = @JoinColumn(name = "usuario_id"))  
-	private Set<Usuario> resposanveis= new HashSet<>();
-	
+	@JoinTable(name = "restaurante_usuario_responsavel", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+	private Set<Usuario> responsaveis = new HashSet<>();
+
 	public void ativar() {
 		setAtivo(true);
 	}
@@ -99,22 +97,32 @@ public class Restaurante {
 	public void inativar() {
 		setAtivo(false);
 	}
-	
+
 	public void abrir() {
 		setAberto(true);
 	}
-	
+
 	public void fechar() {
 		setAberto(false);
 	}
-	
+
 	public boolean adicionarFormaPagamento(FormaPagamento formaPagamento) {
-		
+
 		return getFormasDePagamento().add(formaPagamento);
 	}
-	
+
 	public boolean removerFormaPagamento(FormaPagamento formaPagamento) {
-		
+
 		return getFormasDePagamento().remove(formaPagamento);
+	}
+
+	public boolean adicionarResponsavel(Usuario usuario) {
+
+		return getResponsaveis().add(usuario);
+	}
+
+	public boolean removerResponsavel(Usuario usuario) {
+
+		return getResponsaveis().remove(usuario);
 	}
 }

@@ -1,5 +1,6 @@
 package com.cabraworks.cabrafood.api.assembler;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,7 @@ public class UsuarioDTOAssembler {
 		return modelMapper.map(user, UsuarioDTO.class);
 	}
 	
-	public List<UsuarioDTO> toCollectionModel(List<Usuario> users) {
+	public List<UsuarioDTO> toCollectionModel(Collection<Usuario> users) {
 		
 		return users.stream()
 				.map(user -> toModel(user))
