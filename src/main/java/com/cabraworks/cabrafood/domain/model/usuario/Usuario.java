@@ -42,7 +42,7 @@ public class Usuario {
 	private LocalDateTime dataCadastro;
 
 	@ManyToMany
-	@JoinTable(name = "usuario_grupos", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private List<Grupo> grupos = new ArrayList<>();
 
 	public boolean senhaChecked(String senha) {
@@ -53,5 +53,15 @@ public class Usuario {
 	public boolean senhaUnchecked(String senha) {
 
 		return !senhaChecked(senha);
+	}
+
+	public boolean adicionarGrupo(Grupo grupo) {
+
+		return getGrupos().add(grupo);
+	}
+
+	public boolean removerGrupo(Grupo grupo) {
+
+		return getGrupos().remove(grupo);
 	}
 }

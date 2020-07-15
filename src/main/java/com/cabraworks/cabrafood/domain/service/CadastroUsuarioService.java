@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cabraworks.cabrafood.domain.exception.EntidadeEmUsoException;
 import com.cabraworks.cabrafood.domain.exception.NegocioException;
 import com.cabraworks.cabrafood.domain.exception.UsuarioNaoEncontradoException;
+import com.cabraworks.cabrafood.domain.model.usuario.Grupo;
 import com.cabraworks.cabrafood.domain.model.usuario.Usuario;
 import com.cabraworks.cabrafood.domain.repository.UsuarioRepository;
 
@@ -18,6 +19,9 @@ public class CadastroUsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
+	
+	@Autowired
+	private CadastroGrupoService grupoService;
 	
 	@Transactional
 	public Usuario salvar(Usuario user) {
@@ -56,6 +60,24 @@ public class CadastroUsuarioService {
 		}
 		
 		user.setSenha(novaSenha);
+	}
+	
+	@Transactional
+	public void associarGrupo(Long usuarioId, Long grupoId) {
+		
+		Usuario usuario = buscarOuFalhar(usuarioId);
+		Grupo grupo = grupoService.buscarOuFalhar(grupoId);
+		
+		usuario.adicionarGrupo(grupo);
+	}
+	
+	@Transactional
+	public void desassociarGrupo(Long usuarioId, Long grupoId) {
+		
+		Usuario usuario = buscarOuFalhar(usuarioId);
+		Grupo grupo = grupoService.buscarOuFalhar(grupoId);
+		
+		usuario.removerGrupo(grupo);
 	}
 	
 	public Usuario buscarOuFalhar(Long id) {
