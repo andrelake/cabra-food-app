@@ -13,6 +13,8 @@ delete from restaurante_forma_pagamento;
 delete from usuario;
 delete from usuario_grupo;
 delete from restaurante_usuario_responsavel;
+delete from pedido;
+delete from item_pedido;
 
 set foreign_key_checks = 1;
 
@@ -83,3 +85,15 @@ insert into usuario(nome, email, senha, data_cadastro) values ('Maria Oliveira',
 insert into usuario_grupo(usuario_id, grupo_id) values (1,1), (1,2), (2,2);
 
 insert into restaurante_usuario_responsavel(restaurante_id, usuario_id) values (1, 1), (2, 1);
+
+insert into pedido (id, subtotal, taxa_frete, valor_total, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao)
+values (1, 60.00, 10.00, 70.00, 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil', 'CRIADO', utc_timestamp);
+
+insert into item_pedido (id, quantidade, preco_unitario, preco_total, observacao, pedido_id, produto_id)
+values (1, 1, 60.00, 60.00, 'Sem molho', 1, 1);
+
+insert into pedido (id, subtotal, taxa_frete, valor_total, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro, status, data_criacao)
+values (2, 100.00, 10.00, 110.00, 2, 2, 2, 2, '19900-000', 'Rua Mimimi', '999', 'Sobreloja', 'Pitangueiras', 'CRIADO', utc_timestamp);
+
+insert into item_pedido (id, quantidade, preco_unitario, preco_total, observacao, pedido_id, produto_id)
+values (3, 2, 50.00, 100.00, 'Maneirar na pimenta', 2, 3);

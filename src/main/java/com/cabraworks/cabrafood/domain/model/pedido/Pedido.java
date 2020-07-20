@@ -53,7 +53,7 @@ public class Pedido {
 	
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private FormaPagamento formaDePagamento;
+	private FormaPagamento formaPagamento;
 	
 	@ManyToOne
 	@JoinColumn(nullable = false)
