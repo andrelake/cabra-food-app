@@ -1,9 +1,12 @@
 package com.cabraworks.cabrafood.domain.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cabraworks.cabrafood.domain.exception.NegocioException;
 import com.cabraworks.cabrafood.domain.exception.RestauranteNaoEncontradoException;
 import com.cabraworks.cabrafood.domain.model.Cozinha;
 import com.cabraworks.cabrafood.domain.model.Restaurante;
@@ -57,6 +60,28 @@ public class CadastroRestauranteService {
 		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
 		
 		restauranteAtual.inativar();
+	}
+	
+	@Transactional
+	public void ativar(List<Long> restauranteIds) {
+		
+		try {
+			restauranteIds.forEach(this::ativar);
+		}
+		catch(RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+	
+	@Transactional
+	public void inativar(List<Long> restauranteIds) {
+		
+		try {
+			restauranteIds.forEach(this::inativar);
+		}
+		catch(RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 
 	@Transactional
