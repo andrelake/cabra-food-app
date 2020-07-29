@@ -1,15 +1,17 @@
 package com.cabraworks.cabrafood.domain.model.pedido;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,15 +45,15 @@ public class Pedido {
 	@Column(nullable = false)
 	private BigDecimal valorTotal;
 	
-	@Column(nullable = false)
+	
 	@CreationTimestamp
-	private LocalDateTime dataCriacao;
+	private OffsetDateTime dataCriacao;
 	
-	private LocalDateTime dataConfirmacao;
-	private LocalDateTime dataEntrega;
-	private LocalDateTime dataCancelamento;
+	private OffsetDateTime dataConfirmacao;
+	private OffsetDateTime dataEntrega;
+	private OffsetDateTime dataCancelamento;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
 	private FormaPagamento formaPagamento;
 	
@@ -67,8 +69,20 @@ public class Pedido {
 	private Endereco enderecoEntrega;
 	
 	@Enumerated(EnumType.STRING)
-	private StatusPedido status;
+	private StatusPedido status = StatusPedido.CRIADO;
 	
-	@OneToMany(mappedBy = "pedido")
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedido> itens = new ArrayList<>();
+	
+	public void valorTotalPedido() {
+		
+		getItens().forEach(ItemPedido::calcularPrecoTotal);
+		
+		this.subtotal = getItens()
+				.stream()
+				.map(item -> item.getPrecoTotal())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+		
+		this.valorTotal = this.subtotal.add(this.taxaFrete);
+	}
 }
